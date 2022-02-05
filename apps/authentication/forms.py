@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
 from django.contrib.auth.models import User
-
+from django.forms.widgets import PasswordInput, TextInput
 from apps.authentication.models import MyUser
-
 
 # Create your forms here.
 
@@ -14,11 +13,10 @@ class NewUserForm(UserCreationForm):
 	date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 	contact = forms.CharField()
 	password1 = forms.CharField(label='Password', widget=forms.PasswordInput,)
-	password2 = forms.CharField(label='Password Confirm', widget=forms.PasswordInput, )
 	
 	class Meta:
 		model = MyUser
-		fields = ("first_name","last_name","email", "gender", "contact","date_of_birth","password1", "password2")
+		fields = ("first_name","last_name","email", "gender", "contact","date_of_birth","password1")
 		
 	def save(self, commit=True):
 		user = super(NewUserForm, self).save(commit=False)
@@ -27,3 +25,7 @@ class NewUserForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+class LoginForm(AuthenticationForm):
+	username = UsernameField(label='Email',widget=TextInput(attrs={'class':'validate','placeholder': 'Email'}))
+	password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'Password'}))

@@ -122,5 +122,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+LOGIN_URL = '/login'
 LOGOUT_REDIRECT_URL = '/login'
 AUTH_USER_MODEL = 'authentication.MyUser'

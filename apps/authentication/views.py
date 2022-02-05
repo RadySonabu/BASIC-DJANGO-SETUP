@@ -5,10 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
 
-from .forms import NewUserForm
+from .forms import NewUserForm, LoginForm
 
 
-@login_required(login_url="login/")
+@login_required
 def home_page(request):
 	context = {
 		'title': 'This is a title'
@@ -40,7 +40,7 @@ def register_request(request):
 
 def login_request(request):
 	if request.method == "POST":
-		form = AuthenticationForm(request, data=request.POST)
+		form = LoginForm(request, data=request.POST)
 		if form.is_valid():
 			username = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password')
@@ -53,7 +53,7 @@ def login_request(request):
 				messages.error(request,"Invalid username or password.")
 		else:
 			messages.error(request,"Invalid username or password.")
-	form = AuthenticationForm()
+	form = LoginForm()
 	return render(request=request, template_name="authentication/login.html", context={"login_form":form})
 
 
@@ -62,6 +62,7 @@ def logout_request(request):
 	redirect('login')
 	return render(request, 'authentication/logout.html')
 
+@login_required
 def profile(request):
 	profile = request.user.profile
 	context = {

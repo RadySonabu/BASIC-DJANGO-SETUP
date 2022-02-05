@@ -61,7 +61,9 @@ class Profile(models.Model):
     profile_pic = models.FileField(upload_to='profiles/', null=True, default='default-image.png')
     address = models.CharField(max_length=200, null=True, blank=True)
     contact = models.CharField(max_length=50, null=True, blank=True)
-
+    title = models.CharField(max_length=50)
+    bio = models.CharField(max_length=100)
+    
 @receiver(post_save, sender=MyUser)
 def create_profile(sender, instance, created,**kwargs):
     """Create a profile after signup"""
