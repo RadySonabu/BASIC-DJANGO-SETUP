@@ -54,7 +54,8 @@ def login_request(request):
 		else:
 			messages.error(request,"Invalid username or password.")
 	form = LoginForm()
-	return render(request=request, template_name="authentication/login.html", context={"login_form":form})
+	context = {"pagename": "Login","login_form":form}
+	return render(request=request, template_name="authentication/login.html", context=context)
 
 
 def logout_request(request):
@@ -66,6 +67,7 @@ def logout_request(request):
 def profile(request):
 	profile = request.user.profile
 	context = {
+		"pagename": "Profile",
 		'profile': profile
 	}
 	return render(request, 'authentication/profile.html', context)
