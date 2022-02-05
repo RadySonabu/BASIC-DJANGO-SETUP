@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block base %} {% load crispy_forms_tags %}
+<style>
+	body {
+		background-color: rgb(156, 45, 156);
+	}
+</style>
+<!--Login-->
+<div class="flex justify-center mt-52">
+	<div class="card shadow w-1/4 p-10 rounded-md">
+		<h1 class="text-4xl text-center mb-4">Login to Group Home</h1>
+		<form method="POST">
+			{% csrf_token %} {{ login_form|crispy }}
+			<button
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded"
+				type="submit"
+			>
+				Login
+			</button>
+		</form>
+		<p class="text-center">
+			Don't have an account?
+			<a class="text-blue-600" href="{% url 'register' %}"
+				>Create an account</a
+			>.
+		</p>
+	</div>
+</div>
+
+{% endblock %}
