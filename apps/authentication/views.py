@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.models import User
+from .models import MyUser as User
 from django.contrib.auth import authenticate, login, logout  # add this
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -19,16 +19,23 @@ def home_page(request):
 def register_request(request):
 	if request.user.is_authenticated:
 		return redirect('homepage')
-	elif request.method == "POST":
-		form = NewUserForm(request.POST)
-	if form.is_valid():
-		user = form.save()
-		login(request, user)
-		messages.success(request, "Registration successful." )
-		return redirect("homepage")
-	messages.error(request, "Unsuccessful registration. Invalid information.")
-	form = NewUserForm()
-	return render (request=request, template_name="authentication/register.html", context={"form":form})
+	else: 
+		if request.method == "POST":
+			form = NewUserForm(request.POST)
+			if form.is_valid():
+				user = form.save()
+				login(request, user)
+				messages.success(request, "Registration successful." )
+				return redirect("homepage")
+		messages.error(request, "Unsuccessful registration. Invalid information.")
+		form = NewUserForm()
+	
+		context = {
+			"pagename": 'Registration',
+			"form":form, 
+			
+		}
+	return render (request=request, template_name="authentication/register.html", context=context)
 
 
 def login_request(request):
@@ -56,8 +63,8 @@ def logout_request(request):
 	return render(request, 'authentication/logout.html')
 
 def profile(request):
-	user = request.user
+	profile = request.user.profile
 	context = {
-		'user': user
+		'profile': profile
 	}
 	return render(request, 'authentication/profile.html', context)

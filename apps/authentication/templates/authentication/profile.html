@@ -13,7 +13,7 @@
 					/>
 				</div>
 				<h1 class="text-gray-900 font-bold text-xl leading-8 my-1">
-					Jane Doe
+					{{profile.user.first_name}} {{profile.user.last_name}}
 				</h1>
 				<h3 class="text-gray-600 font-lg text-semibold leading-6">
 					Owner at Her Company Inc.
@@ -37,7 +37,7 @@
 					</li>
 					<li class="flex items-center py-3">
 						<span>Member since</span>
-						<span class="ml-auto">Nov 07, 2016</span>
+						<span class="ml-auto">{{user.date_joined.date}}</span>
 					</li>
 				</ul>
 			</div>
@@ -79,21 +79,21 @@
 							<div class="px-4 py-2 font-semibold">
 								First Name
 							</div>
-							<div class="px-4 py-2">Jane</div>
+							<div class="px-4 py-2">{{user.first_name}}</div>
 						</div>
 						<div class="grid grid-cols-2">
 							<div class="px-4 py-2 font-semibold">Last Name</div>
-							<div class="px-4 py-2">Doe</div>
+							<div class="px-4 py-2">{{user.last_name}}</div>
 						</div>
 						<div class="grid grid-cols-2">
 							<div class="px-4 py-2 font-semibold">Gender</div>
-							<div class="px-4 py-2">Female</div>
+							<div class="px-4 py-2">{{user.gender}}</div>
 						</div>
 						<div class="grid grid-cols-2">
 							<div class="px-4 py-2 font-semibold">
 								Contact No.
 							</div>
-							<div class="px-4 py-2">+11 998001001</div>
+							<div class="px-4 py-2">{{profile.contact}}</div>
 						</div>
 						<div class="grid grid-cols-2">
 							<div class="px-4 py-2 font-semibold">
@@ -117,13 +117,13 @@
 								<a
 									class="text-blue-800"
 									href="mailto:jane@example.com"
-									>jane@example.com</a
+									>{{user.email}}</a
 								>
 							</div>
 						</div>
 						<div class="grid grid-cols-2">
 							<div class="px-4 py-2 font-semibold">Birthday</div>
-							<div class="px-4 py-2">Feb 06, 1998</div>
+							<div class="px-4 py-2">{{user.date_of_birth}}</div>
 						</div>
 					</div>
 				</div>

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
     'django_unicorn',
     'crispy_forms',
+    'widget_tweaks',
 
     # 'apps.movies',
     'apps.authentication',
@@ -122,3 +123,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGOUT_REDIRECT_URL = '/login'
+AUTH_USER_MODEL = 'authentication.MyUser'
