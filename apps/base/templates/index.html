@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block base %}
+{% extends "base.html" %} {% block base %} {% include "navbar.html" %}
+
 <div class="flex">
 	<div class="flex-none">{% include "sidebar.html" %}</div>
 	<main class="flex-1">{% block content %} {% endblock content %}</main>

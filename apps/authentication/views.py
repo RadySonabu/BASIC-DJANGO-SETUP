@@ -1,11 +1,11 @@
-from django.shortcuts import  render, redirect
-from .forms import NewUserForm
-from django.contrib.auth import login, authenticate #add this
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout  # add this
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import redirect, render
+
+from .forms import NewUserForm
 
 
 @login_required(login_url="login/")
@@ -17,14 +17,16 @@ def home_page(request):
 
 
 def register_request(request):
-	if request.method == "POST":
+	if request.user.is_authenticated:
+		return redirect('homepage')
+	elif request.method == "POST":
 		form = NewUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			login(request, user)
-			messages.success(request, "Registration successful." )
-			return redirect("homepage")
-		messages.error(request, "Unsuccessful registration. Invalid information.")
+	if form.is_valid():
+		user = form.save()
+		login(request, user)
+		messages.success(request, "Registration successful." )
+		return redirect("homepage")
+	messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
 	return render (request=request, template_name="authentication/register.html", context={"form":form})
 
@@ -54,4 +56,8 @@ def logout_request(request):
 	return render(request, 'authentication/logout.html')
 
 def profile(request):
-	return render(request, 'authentication/profile.html')
+	user = request.user
+	context = {
+		'user': user
+	}
+	return render(request, 'authentication/profile.html', context)
